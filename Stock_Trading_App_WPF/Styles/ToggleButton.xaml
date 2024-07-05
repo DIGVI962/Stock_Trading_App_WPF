@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="MyOnOffBtnStyle"
+           TargetType="ToggleButton">
+
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+
+                    <Border x:Name="ToggleBtnBorder"
+                            CornerRadius="10"
+                            BorderThickness="0"
+                            Height="20"
+                            Width="40">
+
+                        <Border.Background>
+                            <SolidColorBrush x:Name="ToggleBtnBackground"
+                                             Color="#606060" />
+                        </Border.Background>
+
+                        <Grid x:Name="InnerGrid">
+
+                            <!--<DockPanel x:Name="InnerDock">
+                                <ToggleButton x:Name="OnOffBtn"
+                                        HorizontalAlignment="Left">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate>
+                                            <Border x:Name="InnerBtnBorder" CornerRadius="10"
+                                                    Height="20"
+                                                    Width="20"
+                                                    Background="#FFFFFF" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="BorderBrush" Value="#707070" />
+                                                    <Setter Property="BorderThickness" Value="2" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                            </DockPanel>-->
+
+                            <ContentPresenter Content="{TemplateBinding Content}"/>
+
+                        </Grid>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+
+                            <Setter Property="Background"
+                                    TargetName="ToggleBtnBorder"
+                                    Value="Red" />
+
+
+                        </Trigger>
+
+                        <Trigger Property="IsChecked"
+                                 Value="False">
+
+                            <Setter Property="Background"
+                                    TargetName="ToggleBtnBorder"
+                                    Value="#606060" />
+
+                        </Trigger>
+
+
+                    </ControlTemplate.Triggers>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>

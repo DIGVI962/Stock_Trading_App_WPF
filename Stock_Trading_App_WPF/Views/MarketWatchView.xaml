@@ -1,0 +1,237 @@
+﻿<UserControl x:Class="Stock_Trading_App_WPF.Views.MarketWatchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Stock_Trading_App_WPF.Views"
+             xmlns:viewModels="clr-namespace:Stock_Trading_App_WPF.ViewModels"
+             xmlns:converters="clr-namespace:Stock_Trading_App_WPF.Converters"
+             mc:Ignorable="d" Style="{StaticResource Page_Style}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:Wk52HighLowConverter x:Key="Wk52HighLowConverter"/>
+        <converters:RefreshIconConverter x:Key="RefreshIconConverter" />
+    </UserControl.Resources>
+    <Grid>
+
+        <Border CornerRadius="0 20 20 0" Background="#010101"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+
+            <!--Top Bar-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="GetMarketListButton" Margin="5 5 0 0"
+                        HorizontalAlignment="Left" Grid.Column="0"
+                        Background="#454545" Foreground="White"
+                        Padding="2" Command="{Binding GetMarketButtonClickCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="0" CornerRadius="5">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <TextBlock Text="Load Market" Margin="10 0 10 0" />
+                </Button>
+                <ComboBox x:Name="FlagComboBox" Grid.Column="1" Margin="10 5 10 0" 
+                          SelectionChanged="TypeComboBox_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="Equity"/>
+                        <ComboBoxItem Content="Derivatives"/>
+                        <ComboBoxItem Content="Currency Derivatives"/>
+                        <ComboBoxItem Content="Commodity Derivatives"/>
+                        <ComboBoxItem Content="Electronic Gold Reciepts"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <ComboBox x:Name="DdlVal1ComboBox" Grid.Column="2" Margin="10 5 10 0" 
+                          SelectedItem="{Binding DdlVal1APIParam}">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="Index"/>
+                        <ComboBoxItem Content="Group"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <ComboBox x:Name="DdlVal2ComboBox" Grid.Column="3" Margin="10 5 10 0" 
+                          SelectionChanged="TypeComboBox_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="A"/>
+                        <ComboBoxItem Content="B"/>
+                    </ComboBox.Items>
+                </ComboBox>
+                <Button x:Name="PrevButton" Grid.Column="4" Margin="2 5 2 0" Background="#454545"
+                        Command="{Binding PrevButtonClickCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="5" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Width="16" Height="16"
+                           Source="C:\Users\IAmTheWizard\source\repos\Stock_Trading_App_WPF\Stock_Trading_App_WPF\Assets\left-arrow.png" />
+                </Button>
+                <Button x:Name="NextButton" Grid.Column="5" Margin="2 5 2 0" Background="#454545"
+                        Command="{Binding NextButtonClickCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    CornerRadius="5" BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Width="16" Height="16"
+                           Source="C:\Users\IAmTheWizard\source\repos\Stock_Trading_App_WPF\Stock_Trading_App_WPF\Assets\right-arrow.png" />
+                </Button>
+            </Grid>
+            
+            <!--Secondary Top Bar-->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox x:Name="SrtsComboBox" Grid.Column="1" Margin="10 5 10 0" 
+                          SelectionChanged="TypeComboBox_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="Ascending"/>
+                        <ComboBoxItem Content="Descending"/>
+                    </ComboBox.Items>
+                </ComboBox>
+
+                <ComboBox x:Name="SrtbComboBox" Grid.Column="2" Margin="10 5 10 0" 
+                          SelectionChanged="TypeComboBox_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="A"/>
+                        <ComboBoxItem Content="B"/>
+                    </ComboBox.Items>
+                </ComboBox>
+
+                <TextBlock Grid.Column="3" HorizontalAlignment="Left" Width="50" Text="{Binding CurrPageAPIGet}" Foreground="White" />
+                <Border x:Name="RefreshBorder" Grid.Column="3" HorizontalAlignment="Right" Height="25" Width="25" Margin="0 0 20 0">
+                    <Image x:Name="RefreshImage" Height="16" Width="16" Source="{Binding Path=ShowRefreshIcon, Converter={StaticResource RefreshIconConverter}}"/>
+                </Border>
+                
+            </Grid>
+            
+            <!--ListView-->
+            <ListView x:Name="MarketListView" Grid.Row="2" Margin="5" Background="#606060"
+                      Foreground="#FFFFFF" ItemsSource="{Binding EqtyMarketList}"
+                      MouseDoubleClick="MarketListView_MouseDoubleClick">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Security" DisplayMemberBinding="{Binding ScripName}" Width="auto" />
+                        <GridViewColumn Header="Buy(Qty)" DisplayMemberBinding="{Binding BuyQty}" Width="auto" />
+                        <GridViewColumn Header="Buy(Rs)" DisplayMemberBinding="{Binding BuyPrice}" Width="auto" />
+                        <GridViewColumn Header="Sell(Qty)" DisplayMemberBinding="{Binding SellQty}" Width="auto" />
+                        <GridViewColumn Header="Sell(Rs)" DisplayMemberBinding="{Binding SellPrice}" Width="auto" />
+                        <GridViewColumn Header="LTP" DisplayMemberBinding="{Binding Price}" Width="auto" />
+                        <GridViewColumn Header="Change" DisplayMemberBinding="{Binding Change}" Width="auto" />
+                        <GridViewColumn Header="%" DisplayMemberBinding="{Binding PercentChange}" Width="auto" />
+                        <GridViewColumn Header="Volume" DisplayMemberBinding="{Binding Volume}" Width="auto" />
+                        <GridViewColumn Header="Turnover(Rs Lak)" DisplayMemberBinding="{Binding TurnOver}" Width="auto" />
+                        <GridViewColumn Header="Open" DisplayMemberBinding="{Binding Open}" Width="auto" />
+                        <GridViewColumn Header="High" DisplayMemberBinding="{Binding High}" Width="auto" />
+                        <GridViewColumn Header="Low" DisplayMemberBinding="{Binding Low}" Width="auto" />
+                        <GridViewColumn Header="Close" DisplayMemberBinding="{Binding PreCloseRate}" Width="auto" />
+                        <GridViewColumn Header="52Wk High/Low" Width="auto" >
+                            <GridViewColumn.DisplayMemberBinding>
+                                <MultiBinding Converter="{StaticResource Wk52HighLowConverter}">
+                                    <Binding Path="Wk52High"/>
+                                    <Binding Path="Wk52low"/>
+                                </MultiBinding>
+                            </GridViewColumn.DisplayMemberBinding>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D5F6EE" />
+                                <Setter Property="Foreground" Value="#000000" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#79E2C8" />
+                                <Setter Property="BorderBrush" Value="#209276" />
+                                <Setter Property="Foreground" Value="#000000" />
+                            </Trigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </ListView.ItemContainerStyle>
+
+                <ListView.Template>
+                    <ControlTemplate TargetType="ListView">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="0" CornerRadius="0 0 20 0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Visible"
+                                              VerticalScrollBarVisibility="Visible">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <!-- Header Presenter -->
+                                        <GridViewHeaderRowPresenter Grid.Row="0" Columns="{Binding Path=View.Columns, 
+                                            RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" />
+                                        <!-- Item Presenter -->
+                                        <ItemsPresenter Grid.Row="1" />
+                                    </Grid>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </ListView.Template>
+            </ListView>
+            
+            <!--Bottom Bar-->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1" Foreground="#FFFFFF" Padding="2"
+                           Text="Pg. " />
+                <TextBlock Grid.Column="2" Foreground="#FFFFFF" Padding="2"
+                           Text="{Binding PgNo}" />
+            </Grid>
+            
+        </Grid>
+
+    </Grid>
+</UserControl>

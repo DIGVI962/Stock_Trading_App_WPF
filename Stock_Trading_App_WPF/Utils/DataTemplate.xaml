@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:Stock_Trading_App_WPF.ViewModels"
+                    xmlns:vmSP="clr-namespace:Stock_Trading_App_WPF.ViewModels.StockInfoPageVM"
+                    xmlns:views="clr-namespace:Stock_Trading_App_WPF.Views"
+                    xmlns:viewsSP="clr-namespace:Stock_Trading_App_WPF.Views.StockInfoPages">
+    
+    <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+        <views:HomeView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:SecurityListViewModel}">
+        <views:SecurityListView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:MarketWatchViewModel}">
+        <views:MarketWatchView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:IndivStockInfoViewModel}">
+        <views:IndivStockInfoView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmSP:InfoViewModel}">
+        <viewsSP:InfoView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmSP:QuotesViewModel}">
+        <viewsSP:QuotesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmSP:AdditionalViewModel}">
+        <viewsSP:AdditionalView />
+    </DataTemplate>
+
+</ResourceDictionary>
